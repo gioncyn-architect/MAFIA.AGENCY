@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#07050a">
+<title>MAFIA AGENCY — Pendaftaran & Masalah Host</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Manrope:wght@400;500;700&display=swap">
+<style>
+:root{
+  --bg:#07050a; --bg2:#0f0a16; --panel:rgba(24,16,34,.62); --line:rgba(226,182,92,.28);
+  --gold1:#fff1c1; --gold2:#e6b95c; --gold3:#a8741a; --ink:#f4eee0; --mute:#a99f8c; --err:#ff6b6b;
+  --serif:"Cinzel","Times New Roman",serif; --sans:"Manrope",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --goldgrad:linear-gradient(135deg,var(--gold1) 0%,var(--gold2) 40%,var(--gold3) 70%,var(--gold2) 100%);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:radial-gradient(120% 80% at 50% -10%,#1c1030 0%,var(--bg) 55%) fixed;color:var(--ink);font-family:var(--sans);line-height:1.55;min-height:100vh;overflow-x:hidden;padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom)}
+#sparkle{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:0}
+.wrap{position:relative;z-index:1;max-width:760px;margin:0 auto;padding:0 18px 56px}
+
+/* HERO */
+.hero{text-align:center;padding:48px 0 28px}
+.crest{width:min(320px,86vw);margin:0 auto 18px;position:relative;filter:drop-shadow(0 0 22px rgba(230,185,92,.35));animation:float 6s ease-in-out infinite}
+.crest svg{width:100%;display:block}
+.tw{transform-box:fill-box;transform-origin:center;animation:tw 2.4s ease-in-out infinite}
+@keyframes tw{0%,100%{opacity:.15;transform:scale(.6)}50%{opacity:1;transform:scale(1.15)}}
+@keyframes float{50%{transform:translateY(-7px)}}
+.brand{font-family:var(--serif);font-weight:900;font-size:clamp(2.1rem,9vw,3.6rem);letter-spacing:.12em;line-height:1.05;background:var(--goldgrad);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 6s linear infinite}
+@keyframes shine{to{background-position:-200% 0}}
+.rule{width:140px;height:1px;margin:16px auto 0;background:linear-gradient(90deg,transparent,var(--gold2),transparent);position:relative}
+.rule::after{content:"";position:absolute;left:50%;top:-3px;width:7px;height:7px;background:var(--gold2);transform:translateX(-50%) rotate(45deg)}
+.lead{color:var(--mute);margin-top:18px;font-size:.98rem}
+
+/* SWITCH */
+.switch{display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:6px;border:1px solid var(--line);border-radius:16px;background:rgba(15,10,22,.7);backdrop-filter:blur(10px);margin:26px 0 18px;position:sticky;top:calc(env(safe-area-inset-top) + 8px);z-index:5}
+.switch button{font:inherit;font-weight:700;color:var(--mute);background:transparent;border:0;padding:14px 8px;border-radius:11px;cursor:pointer;min-height:48px;transition:color .25s,background .25s,transform .15s}
+.switch button:active{transform:scale(.97)}
+.switch button[aria-selected="true"]{color:#1a1205;background:var(--goldgrad);box-shadow:0 6px 22px rgba(230,185,92,.35)}
+.switch button:focus-visible,.btn:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--gold1);outline-offset:3px}
+
+/* CARD */
+.card{position:relative;border-radius:20px;padding:24px 20px;background:var(--panel);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid transparent;background-clip:padding-box;animation:rise .55s cubic-bezier(.2,.8,.2,1) both}
+.card::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;background:linear-gradient(140deg,rgba(255,241,193,.7),rgba(230,185,92,.1) 35%,rgba(168,116,26,.6));-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
+@keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+.card[hidden]{display:none}
+.card h2{font-family:var(--serif);font-size:1.45rem;letter-spacing:.04em;color:var(--gold1)}
+.card .desc{color:var(--mute);font-size:.92rem;margin:4px 0 18px}
+.field{margin-bottom:15px}
+label{display:block;font-size:.85rem;font-weight:700;color:var(--gold2);margin-bottom:6px;letter-spacing:.03em}
+input,textarea{width:100%;font:inherit;color:var(--ink);background:rgba(7,5,10,.65);border:1px solid rgba(230,185,92,.22);border-radius:12px;padding:13px 14px;transition:border-color .2s,box-shadow .2s}
+textarea{min-height:110px;resize:vertical}
+input::placeholder,textarea::placeholder{color:#6d6454}
+input:focus,textarea:focus{border-color:var(--gold2);box-shadow:0 0 0 4px rgba(230,185,92,.12)}
+.field.bad input,.field.bad textarea{border-color:var(--err)}
+.msg{color:var(--err);font-size:.78rem;min-height:1em;margin-top:4px;display:none}
+.field.bad .msg{display:block}
+
+/* BUTTON */
+.btn{position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;gap:10px;width:100%;font:inherit;font-weight:800;letter-spacing:.06em;color:#1a1205;background:var(--goldgrad);background-size:200% 100%;border:0;border-radius:14px;padding:16px;min-height:54px;cursor:pointer;box-shadow:0 10px 30px rgba(230,185,92,.3),inset 0 1px 0 rgba(255,255,255,.5);transition:transform .15s,box-shadow .25s,background-position .6s;animation:pulse 2.8s ease-in-out infinite}
+.btn::before{content:"";position:absolute;top:0;left:-70%;width:45%;height:100%;background:linear-gradient(105deg,transparent,rgba(255,255,255,.65),transparent);transform:skewX(-20deg);transition:left .7s}
+.btn:hover{background-position:100% 0;box-shadow:0 14px 38px rgba(230,185,92,.5),inset 0 1px 0 rgba(255,255,255,.6)}
+.btn:hover::before{left:130%}
+.btn:active{transform:scale(.98)}
+.btn svg{width:20px;height:20px;flex:none}
+@keyframes pulse{50%{box-shadow:0 10px 38px rgba(230,185,92,.55),inset 0 1px 0 rgba(255,255,255,.5)}}
+.note{text-align:center;color:var(--mute);font-size:.78rem;margin-top:12px}
+
+footer{text-align:center;color:var(--mute);font-size:.8rem;margin-top:34px}
+footer b{font-family:var(--serif);color:var(--gold2);letter-spacing:.14em}
+.toast{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom) + 22px);transform:translate(-50%,30px);opacity:0;z-index:20;background:#1a1205;color:var(--gold1);border:1px solid var(--gold2);padding:12px 20px;border-radius:999px;font-weight:700;font-size:.9rem;transition:.35s;pointer-events:none;max-width:90vw;text-align:center}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<canvas id="sparkle" aria-hidden="true"></canvas>
+
+<div class="wrap">
+  <header class="hero">
+    <div class="crest" aria-hidden="true">
+      <svg viewBox="0 30 320 215" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#fff1c1"/><stop offset=".45" stop-color="#e6b95c"/><stop offset="1" stop-color="#8f5f12"/>
+          </linearGradient>
+          <linearGradient id="gb" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#a8741a"/><stop offset=".45" stop-color="#fff6d6"/><stop offset="1" stop-color="#b8821f"/>
+          </linearGradient>
+          <radialGradient id="bgc" cx=".5" cy=".35" r=".75"><stop offset="0" stop-color="#2a1a40"/><stop offset="1" stop-color="#07050a"/></radialGradient>
+          <linearGradient id="sw" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".6"/><stop offset="1" stop-color="#fff" stop-opacity="0"/>
+          </linearGradient>
+          <clipPath id="cd"><circle cx="160" cy="165" r="70"/></clipPath>
+          <path id="ft" d="M0 0C-18-10-60-9-84 3C-60 12-18 9 0 0Z"/>
+          <g id="sword">
+            <path d="M160 40L168 60V188H152V60Z" fill="url(#gb)" stroke="#2c1a04" stroke-width="1"/>
+            <path d="M160 52V186" stroke="#7a4f0e" stroke-width="1.2"/>
+            <rect x="136" y="188" width="48" height="8" rx="4" fill="url(#g)" stroke="#2c1a04" stroke-width="1"/>
+            <rect x="156" y="196" width="8" height="22" fill="#3a2406" stroke="url(#g)" stroke-width="1.2"/>
+            <circle cx="160" cy="224" r="6" fill="url(#g)" stroke="#2c1a04" stroke-width="1"/>
+          </g>
+          <g id="wingL" transform="translate(104,158)" fill="url(#g)" stroke="#2c1a04" stroke-width=".8">
+            <use href="#ft" transform="rotate(-54) scale(.74)"/>
+            <use href="#ft" transform="rotate(-36) scale(.88)"/>
+            <use href="#ft" transform="rotate(-17) scale(1.02)"/>
+            <use href="#ft" transform="rotate(3) scale(1.1)"/>
+            <use href="#ft" transform="rotate(22) scale(.98)"/>
+            <use href="#ft" transform="rotate(40) scale(.8)"/>
+          </g>
+        </defs>
+
+        <!-- sayap -->
+        <use href="#wingL"/>
+        <use href="#wingL" transform="translate(320,0) scale(-1,1)"/>
+
+        <!-- pedang bersilang -->
+        <use href="#sword" transform="rotate(-40 160 165)"/>
+        <use href="#sword" transform="rotate(40 160 165)"/>
+
+        <!-- cakram utama -->
+        <circle cx="160" cy="165" r="73" fill="#07050a" opacity=".6"/>
+        <circle cx="160" cy="165" r="70" fill="url(#bgc)" stroke="url(#g)" stroke-width="3.5"/>
+        <circle cx="160" cy="165" r="63" fill="none" stroke="url(#g)" stroke-width="1" stroke-dasharray="2 4"/>
+
+        <!-- mahkota -->
+        <path d="M138 134L134 112L148 122L160 106L172 122L186 112L182 134Z" fill="url(#g)" stroke="#2c1a04" stroke-width="1" stroke-linejoin="round"/>
+        <rect x="138" y="130" width="44" height="6" rx="2" fill="url(#g)" stroke="#2c1a04" stroke-width="1"/>
+        <circle cx="134" cy="111" r="2.6" fill="#ff4d6d"/><circle cx="160" cy="105" r="3" fill="#7dd3fc"/><circle cx="186" cy="111" r="2.6" fill="#ff4d6d"/>
+
+        <!-- huruf M·A berukir -->
+        <g font-family="Cinzel,'Times New Roman',serif" font-weight="900" font-size="46" text-anchor="middle" letter-spacing="2">
+          <text x="161.5" y="173.5" fill="#000" opacity=".7">M·A</text>
+          <text x="160" y="172" fill="url(#g)" stroke="#3a2406" stroke-width=".9" paint-order="stroke">M·A</text>
+          <text x="159.3" y="171.3" fill="none" stroke="#fff6d6" stroke-width=".5" opacity=".7">M·A</text>
+        </g>
+
+        <!-- topeng -->
+        <path d="M134 186C143 180 152 184 160 184C168 184 177 180 186 186C184 195 175 197 168 192C164 189 156 189 152 192C145 197 136 195 134 186Z" fill="url(#g)" stroke="#2c1a04" stroke-width="1"/>
+        <ellipse cx="148" cy="188" rx="5" ry="2.6" fill="#07050a" transform="rotate(12 148 188)"/>
+        <ellipse cx="172" cy="188" rx="5" ry="2.6" fill="#07050a" transform="rotate(-12 172 188)"/>
+
+        <!-- kilau menyapu -->
+        <g clip-path="url(#cd)"><g transform="skewX(-20)"><rect x="120" y="95" width="38" height="140" fill="url(#sw)"><animate attributeName="x" values="120;320;320" keyTimes="0;.5;1" dur="4.5s" repeatCount="indefinite"/></rect></g></g>
+
+        <!-- topi fedora -->
+        <g transform="rotate(-7 160 90)">
+          <ellipse cx="160" cy="91" rx="56" ry="11" fill="url(#g)" stroke="#2c1a04" stroke-width="1.2"/>
+          <path d="M125 88C124 64 134 50 160 53C186 50 196 64 195 88C180 94 140 94 125 88Z" fill="#1a1024" stroke="url(#g)" stroke-width="1.6"/>
+          <path d="M140 58C152 62 168 62 180 58" fill="none" stroke="url(#g)" stroke-width="1" opacity=".8"/>
+          <path d="M126 82C140 90 180 90 194 82L195 88C180 94 140 94 125 88Z" fill="url(#g)" stroke="#2c1a04" stroke-width=".8"/>
+        </g>
+
+        <!-- percikan -->
+        <g fill="#fff6d6">
+          <path class="tw" d="M30 120l2 6 6 2-6 2-2 6-2-6-6-2 6-2z"/>
+          <path class="tw" style="animation-delay:.9s" d="M292 112l2 6 6 2-6 2-2 6-2-6-6-2 6-2z"/>
+          <path class="tw" style="animation-delay:1.7s" d="M60 205l1.5 4 4 1.5-4 1.5-1.5 4-1.5-4-4-1.5 4-1.5z"/>
+          <path class="tw" style="animation-delay:.4s" d="M262 208l1.5 4 4 1.5-4 1.5-1.5 4-1.5-4-4-1.5 4-1.5z"/>
+        </g>
+      </svg>
+    </div>
+    <h1 class="brand">MAFIA AGENCY</h1>
+    <div class="rule"></div>
+    <p class="lead">Daftar sebagai host atau laporkan masalahmu. Admin kami siap membantu.</p>
+  </header>
+
+  <nav class="switch" role="tablist" aria-label="Pilih layanan">
+    <button role="tab" id="t1" aria-selected="true" aria-controls="p1">Pendaftaran Host</button>
+    <button role="tab" id="t2" aria-selected="false" aria-controls="p2">Masalah Host</button>
+  </nav>
+
+  <!-- 1. PENDAFTARAN HOST -->
+  <section class="card" id="p1" role="tabpanel" aria-labelledby="t1">
+    <h2>Pendaftaran Host</h2>
+    <p class="desc">Isi data di bawah, lalu kirim langsung ke admin lewat WhatsApp.</p>
+    <form id="f1" novalidate>
+      <div class="field"><label for="a1">Nama aplikasi</label><input id="a1" name="app" placeholder="Contoh: nama aplikasi yang ingin kamu ikuti" autocomplete="off"><div class="msg">Nama aplikasi wajib diisi.</div></div>
+      <div class="field"><label for="h1">Nama host</label><input id="h1" name="host" placeholder="Nama lengkap atau nama panggung" autocomplete="name"><div class="msg">Nama host wajib diisi.</div></div>
+      <div class="field"><label for="u1">Umur host</label><input id="u1" name="umur" type="number" inputmode="numeric" min="1" max="99" placeholder="Contoh: 21" autocomplete="off"><div class="msg">Masukkan umur yang valid.</div></div>
+      <div class="field"><label for="x1">Pengalaman</label><textarea id="x1" name="exp" placeholder="Ceritakan pengalaman kamu sebagai host. Kalau belum ada, tulis: belum ada."></textarea><div class="msg">Pengalaman wajib diisi.</div></div>
+      <button class="btn" type="submit"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.5 3.5A11 11 0 0 0 3.2 17.3L2 22l4.8-1.2A11 11 0 1 0 20.5 3.5zm-8.5 17a9 9 0 0 1-4.6-1.3l-.3-.2-2.8.7.8-2.7-.2-.3A9 9 0 1 1 12 20.5zm5-6.7c-.3-.1-1.6-.8-1.9-.9s-.5-.1-.7.1-.8.9-.9 1.1-.3.2-.6.1a7.400 7.400 0 0 1-3.700-3.200c-.3-.5.3-.5.8-1.500.1-.2 0-.3 0-.5s-.7-1.700-1-2.300c-.2-.6-.5-.5-.7-.5h-.6a1.200 1.200 0 0 0-.9.4 3.700 3.700 0 0 0-1.100 2.700 6.400 6.400 0 0 0 1.300 3.400 14.700 14.700 0 0 0 5.600 4.900c2.100.9 2.900 1 3.900.8a3.300 3.300 0 0 0 2.200-1.500 2.700 2.700 0 0 0 .2-1.500c-.1-.1-.3-.2-.6-.3z"/></svg>KIRIM KE ADMIN</button>
+      <p class="note">Tombol akan membuka WhatsApp admin dengan pesan yang sudah terisi.</p>
+    </form>
+  </section>
+
+  <!-- 2. MASALAH HOST -->
+  <section class="card" id="p2" role="tabpanel" aria-labelledby="t2" hidden>
+    <h2>Masalah Host</h2>
+    <p class="desc">Ada kendala? Jelaskan singkat dan jelas agar cepat ditangani.</p>
+    <form id="f2" novalidate>
+      <div class="field"><label for="a2">Nama aplikasi</label><input id="a2" name="app" placeholder="Aplikasi tempat masalah terjadi" autocomplete="off"><div class="msg">Nama aplikasi wajib diisi.</div></div>
+      <div class="field"><label for="h2">Nama host</label><input id="h2" name="host" placeholder="Nama host" autocomplete="name"><div class="msg">Nama host wajib diisi.</div></div>
+      <div class="field"><label for="i2">ID host</label><input id="i2" name="id" placeholder="ID kamu di aplikasi" autocomplete="off"><div class="msg">ID host wajib diisi.</div></div>
+      <div class="field"><label for="m2">Masalah</label><textarea id="m2" name="masalah" placeholder="Tulis masalah yang kamu alami"></textarea><div class="msg">Masalah wajib diisi.</div></div>
+      <button class="btn" type="submit"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.5 3.5A11 11 0 0 0 3.2 17.3L2 22l4.8-1.2A11 11 0 1 0 20.5 3.5zm-8.5 17a9 9 0 0 1-4.6-1.3l-.3-.2-2.8.7.8-2.7-.2-.3A9 9 0 1 1 12 20.5zm5-6.7c-.3-.1-1.6-.8-1.9-.9s-.5-.1-.7.1-.8.9-.9 1.1-.3.2-.6.1a7.400 7.400 0 0 1-3.700-3.200c-.3-.5.3-.5.8-1.500.1-.2 0-.3 0-.5s-.7-1.700-1-2.300c-.2-.6-.5-.5-.7-.5h-.6a1.200 1.200 0 0 0-.9.4 3.700 3.700 0 0 0-1.100 2.700 6.400 6.400 0 0 0 1.300 3.400 14.700 14.700 0 0 0 5.600 4.900c2.100.9 2.900 1 3.900.8a3.300 3.300 0 0 0 2.200-1.500 2.700 2.700 0 0 0 .2-1.500c-.1-.1-.3-.2-.6-.3z"/></svg>KIRIM KE ADMIN</button>
+      <p class="note">Tombol akan membuka WhatsApp admin dengan pesan yang sudah terisi.</p>
+    </form>
+  </section>
+
+  <footer><b>MAFIA AGENCY</b><br>Admin: 081364564486</footer>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+  var ADMIN = "6281364564486"; // 081364564486
+
+  /* Tab switch */
+  var tabs = [document.getElementById("t1"), document.getElementById("t2")];
+  var panels = [document.getElementById("p1"), document.getElementById("p2")];
+  function show(i){
+    tabs.forEach(function(t,k){ t.setAttribute("aria-selected", k===i); panels[k].hidden = k!==i; });
+  }
+  tabs.forEach(function(t,i){ t.addEventListener("click", function(){ show(i); }); });
+
+  /* Toast */
+  var toast = document.getElementById("toast"), tt;
+  function say(m){ toast.textContent = m; toast.classList.add("on"); clearTimeout(tt); tt = setTimeout(function(){ toast.classList.remove("on"); }, 2600); }
+
+  /* Validasi + kirim WhatsApp */
+  function wire(formId, title, rows){
+    var form = document.getElementById(formId);
+    form.querySelectorAll("input,textarea").forEach(function(el){
+      el.addEventListener("input", function(){ el.closest(".field").classList.remove("bad"); });
+    });
+    form.addEventListener("submit", function(e){
+      e.preventDefault();
+      var ok = true, lines = [];
+      rows.forEach(function(r){
+        var el = form.elements[r[0]], v = el.value.trim();
+        var valid = v !== "" && (r[0] !== "umur" || (+v >= 1 && +v <= 99));
+        el.closest(".field").classList.toggle("bad", !valid);
+        if(!valid){ if(ok) el.focus(); ok = false; }
+        lines.push(r[1] + ": " + v);
+      });
+      if(!ok){ say("Lengkapi semua kolom dulu"); return; }
+      var text = "Halo admin MAFIA AGENCY,\n*" + title + "*\n\n" + lines.join("\n");
+      window.open("https://wa.me/" + ADMIN + "?text=" + encodeURIComponent(text), "_blank", "noopener");
+      say("Membuka WhatsApp admin...");
+      form.reset();
+    });
+  }
+  wire("f1", "PENDAFTARAN HOST", [["app","Nama aplikasi"],["host","Nama host"],["umur","Umur host"],["exp","Pengalaman"]]);
+  wire("f2", "MASALAH HOST", [["app","Nama aplikasi"],["host","Nama host"],["id","ID host"],["masalah","Masalah"]]);
+
+  /* Glitter emas */
+  var cv = document.getElementById("sparkle"), cx = cv.getContext("2d"), W, H, P = [], dpr = Math.min(window.devicePixelRatio||1, 2);
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function size(){ W = cv.width = innerWidth*dpr; H = cv.height = innerHeight*dpr; }
+  function mk(){ return {x:Math.random()*W, y:Math.random()*H, r:(Math.random()*1.6+.4)*dpr, a:Math.random()*Math.PI*2, s:Math.random()*.02+.008, vy:(Math.random()*.25+.05)*dpr}; }
+  function init(){ size(); P = []; var n = Math.min(90, Math.floor(innerWidth/9)); for(var i=0;i<n;i++) P.push(mk()); }
+  function star(p, o){
+    cx.globalAlpha = o; cx.fillStyle = "#f6d98a";
+    cx.beginPath(); cx.moveTo(p.x, p.y-p.r*3); cx.lineTo(p.x+p.r*.7, p.y-p.r*.7); cx.lineTo(p.x+p.r*3, p.y);
+    cx.lineTo(p.x+p.r*.7, p.y+p.r*.7); cx.lineTo(p.x, p.y+p.r*3); cx.lineTo(p.x-p.r*.7, p.y+p.r*.7);
+    cx.lineTo(p.x-p.r*3, p.y); cx.lineTo(p.x-p.r*.7, p.y-p.r*.7); cx.closePath(); cx.fill();
+  }
+  function tick(){
+    cx.clearRect(0,0,W,H);
+    P.forEach(function(p){
+      p.a += p.s; p.y -= p.vy; if(p.y < -10){ p.y = H+10; p.x = Math.random()*W; }
+      star(p, Math.max(0, Math.sin(p.a))*.85);
+    });
+    cx.globalAlpha = 1;
+    if(!reduce) requestAnimationFrame(tick);
+  }
+  addEventListener("resize", init); init(); tick();
+})();
+</script>
+</body>
+</html>
